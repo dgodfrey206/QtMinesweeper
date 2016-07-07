@@ -2,6 +2,7 @@
 #define MAIN_GAME_WINDOW_H
 // 游戏主界面
 #include <QMainWindow>
+#include <QLabel>
 
 namespace Ui {
 class MainGameWindow;
@@ -23,6 +24,13 @@ private:
     Ui::MainGameWindow *ui;
 
     GameModel *game; // 游戏
+<<<<<<< HEAD
+=======
+    QTimer *timer;     // 计时器
+    QLabel *timeLabel; // 计时数字
+
+    void handleGameState(GameModel *game); // 处理游戏状态
+>>>>>>> d96786b... Use updated Qt versions and build versions
 private slots:
     void onStartGameClicked();    // 开始游戏
     void onLevelChooseClicked();  // 选择游戏难度

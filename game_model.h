@@ -42,14 +42,28 @@ public:
 public:
     void digMine(int m, int n); //挖雷, m是行， n是列
     void markMine(int m, int n); // 标记雷
+<<<<<<< HEAD
     void createGame(int row = kRow, int col = kCol, int mineCount = kMineCount); // 初始化游戏
     GameState checkGame(); // 检查游戏输赢
+=======
+    void createGame(int row = kRow, int col = kCol, int mineCount = kMineCount, GameLevel level = MEDIUM); // 初始化游戏
+    void restartGame();  // 按当前参数重新开始游戏
+    void checkGame(); // 检查游戏输赢
+>>>>>>> d96786b... Use updated Qt versions and build versions
 public:
     std::vector<std::vector<MineBlock>> gameMap; // 游戏地图
     int mRow; // 地图行数
     int mCol; // 地图列数
+<<<<<<< HEAD
     int mineNumber; // 雷数
 
+=======
+    int totalMineNumber; // 雷数
+    int curMineNumber;   // 当前雷数（仅用于显示）
+    int timerSeconds; // 计时（秒）
+
+
+>>>>>>> d96786b... Use updated Qt versions and build versions
     GameState gameState; // 当前游戏状态
 };
 

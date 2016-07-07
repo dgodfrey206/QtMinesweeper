@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
+<<<<<<< HEAD
 <!-- Written by QtCreator 3.6.1, 2016-07-04T08:24:28. -->
+=======
+<!-- Written by QtCreator 3.6.1, 2016-07-07T20:19:31. -->
+>>>>>>> d96786b... Use updated Qt versions and build versions
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
