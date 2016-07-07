@@ -1,10 +1,8 @@
 #ifndef GAMEMODEL_H
 #define GAMEMODEL_H
 
-// 游戏逻辑模型类，逻辑与界面分离
 #include <vector>
 
-// 方块的状态，未挖掘，翻开，标记，雷出现，错误标记
 enum BlockState
 {
     UN_DIG,
@@ -13,14 +11,13 @@ enum BlockState
     BOMB,
     WRONG_BOMB
 };
-// 雷方块类
+
 struct MineBlock
 {
-    BlockState curState; // 当前状态
-    int valueFlag; // 数值，0到8， -1表示雷
+    BlockState curState;
+    int valueFlag;
 };
 
-// 游戏状态，分为未完，有错误标记、输、赢四种
 enum GameState
 {
     PLAYING,
@@ -29,7 +26,6 @@ enum GameState
     WIN
 };
 
-// 游戏默认参数
 const int kRow = 15;
 const int kCol = 20;
 const int kMineCount = 50;
@@ -40,31 +36,25 @@ public:
     GameModel();
     virtual ~GameModel();
 public:
-    void digMine(int m, int n); //挖雷, m是行， n是列
-    void markMine(int m, int n); // 标记雷
-<<<<<<< HEAD
-    void createGame(int row = kRow, int col = kCol, int mineCount = kMineCount); // 初始化游戏
-    GameState checkGame(); // 检查游戏输赢
-=======
-    void createGame(int row = kRow, int col = kCol, int mineCount = kMineCount, GameLevel level = MEDIUM); // 初始化游戏
-    void restartGame();  // 按当前参数重新开始游戏
-    void checkGame(); // 检查游戏输赢
->>>>>>> d96786b... Use updated Qt versions and build versions
+    void digMine(int m, int n);
+    void markMine(int m, int n);
+    void createGame(int row = kRow, int col = kCol, int mineCount = kMineCount);
+    GameState checkGame();
+
+    void createGame(int row = kRow, int col = kCol, int mineCount = kMineCount, GameLevel level = MEDIUM);
+    void restartGame(); 
+    void checkGame(); 
 public:
-    std::vector<std::vector<MineBlock>> gameMap; // 游戏地图
-    int mRow; // 地图行数
-    int mCol; // 地图列数
-<<<<<<< HEAD
-    int mineNumber; // 雷数
+    std::vector<std::vector<MineBlock>> gameMap; 
+    int mRow; 
+    int mCol; 
+    int mineNumber; 
 
-=======
-    int totalMineNumber; // 雷数
-    int curMineNumber;   // 当前雷数（仅用于显示）
-    int timerSeconds; // 计时（秒）
+    int totalMineNumber;
+    int curMineNumber;  
+    int timerSeconds; 
 
-
->>>>>>> d96786b... Use updated Qt versions and build versions
-    GameState gameState; // 当前游戏状态
+    GameState gameState; 
 };
 
 #endif // GAMEMODEL_H

@@ -8,7 +8,7 @@ GameModel::GameModel()
       mineNumber(kMineCount),
       gameState(PLAYING)
 {
-    // 在构造函数里面不做具体初始化，因为构造函数的调用时间不确定
+
 }
 
 GameModel::~GameModel()
@@ -18,44 +18,36 @@ GameModel::~GameModel()
 
 void GameModel::createGame(int row, int col, int mineCount)
 {
-    // 设置成员变量
     mRow = row;
     mCol = col;
     mineNumber = mineCount;
     gameState = PLAYING;
 
-    // 初始化雷方块
     for(int i = 0; i < mRow; i++)
     {
-        //添加每行的block
         std::vector<MineBlock> lineBlocks;
         for(int j = 0; j < mCol; j++)
         {
             MineBlock mineBlock;
-            mineBlock.curState = UN_DIG; // 默认都是未挖掘
-            mineBlock.valueFlag = 0; // 默认都是0
+            mineBlock.curState = UN_DIG;
+            mineBlock.valueFlag = 0;
             lineBlocks.push_back(mineBlock);
         }
         gameMap.push_back(lineBlocks);
     }
 
-    // 随机布雷
     srand((unsigned int)time(0));
     for(int k = mineNumber; k > 0; k--)
     {
-        // 埋雷
         int pRow = rand() % mRow;
         int pCol = rand() % mCol;
         gameMap[pRow][pCol].valueFlag = -1;
     }
 
-    // 计算雷周围的方块数字
     for(int i = 0; i < mRow; i++)
     {
         for(int j = 0; j < mCol; j++)
         {
-            // 周围八个方块（排除自己，在地图范围内）的数字根据雷的数目叠加
-            // y为行偏移量，x为列偏移量
             for(int y = -1; y <= 1; y++)
             {
                 for(int x = -1; x <= 1; x++)
@@ -67,7 +59,6 @@ void GameModel::createGame(int row, int col, int mineCount)
                     && gameMap[i + y][j + x].valueFlag == -1
                     && !(x == 0 && y == 0))
                     {
-                        // 方块数字加1
                         gameMap[i][j].valueFlag++;
                     }
                 }
@@ -78,14 +69,12 @@ void GameModel::createGame(int row, int col, int mineCount)
 
 void GameModel::digMine(int m, int n)
 {
-    // 正常方块且没有被翻开过，标记为已挖
     if(gameMap[m][n].valueFlag > 0
      && gameMap[m][n].curState == UN_DIG)
     {
         gameMap[m][n].curState = DIGGED;
     }
 
-    // 遇到空白块（数字0）就递归挖雷，如果踩雷就爆掉,游戏结束
     if(gameMap[m][n].valueFlag == 0
      && gameMap[m][n].curState == UN_DIG)
     {
@@ -106,27 +95,21 @@ void GameModel::digMine(int m, int n)
         }
     }
 
-    // 踩雷了
     if(gameMap[m][n].valueFlag == -1)
     {
         gameState = OVER;
         gameMap[m][n].curState = BOMB;
     }
 
-    // 检查游戏输赢,并作调整
     checkGame();
 }
 
 void GameModel::markMine(int m, int n)
 {
-    // 如果标记错了，就记为错误标记，在ui层游戏结束时做绘制区分
-    // 注意这里有个逻辑，如果一个方块标记两次会回到未挖掘的状态
     if(gameMap[m][n].curState == UN_DIG)
     {
-<<<<<<< HEAD
         gameMap[m][n].curState = MARKED;
-        mineNumber--; //挖对了雷就减1
-=======
+        mineNumber--;
         if(gameMap[m][n].valueFlag == -1)
         {
             gameMap[m][n].curState = MARKED;
@@ -136,16 +119,16 @@ void GameModel::markMine(int m, int n)
             gameState = FAULT;
             gameMap[m][n].curState = WRONG_BOMB;
         }
-        curMineNumber--; // 挖对了雷就减1
+        curMineNumber--;
 >>>>>>> d96786b... Use updated Qt versions and build versions
     }
     else if(gameMap[m][n].curState == MARKED || gameMap[m][n].curState == WRONG_BOMB)
     {
         gameMap[m][n].curState = UN_DIG;
         gameState = PLAYING;
-        curMineNumber++; // 雷数加回来
+        curMineNumber++;
     }
-    // 检查游戏输赢,并作调整
+
     checkGame();
 }
 
@@ -153,7 +136,6 @@ void GameModel::checkGame()
 {
     if(gameState == OVER)
     {
-        // 输了就显示所有的雷以及标错的雷
         for(int i = 0; i < mRow; i++)
         {
             for(int j = 0; j < mCol; j++)
@@ -164,7 +146,6 @@ void GameModel::checkGame()
                 }
             }
         }
-<<<<<<< HEAD
     }
 
     if(mineNumber == 0)
@@ -172,11 +153,9 @@ void GameModel::checkGame()
         gameState = WIN;
     }
 
-    return gameState; // 返回游戏状态
-=======
-        return;
+    return gameState;
     }
-    // 如果雷排完了，且所有方块都挖出或者标记
+
     if(gameState != FAULT)
     {
         for(int i = 0; i < mRow; i++)
@@ -190,11 +169,6 @@ void GameModel::checkGame()
                 }
             }
         }
-        // 否则既没有错误标记游戏状态又不是输或者进行中，游戏就是赢了
         gameState = WIN;
     }
-
-
-
->>>>>>> d96786b... Use updated Qt versions and build versions
 }
