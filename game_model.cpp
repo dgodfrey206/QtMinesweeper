@@ -120,7 +120,7 @@ void GameModel::markMine(int m, int n)
             gameMap[m][n].curState = WRONG_BOMB;
         }
         curMineNumber--;
->>>>>>> d96786b... Use updated Qt versions and build versions
+
     }
     else if(gameMap[m][n].curState == MARKED || gameMap[m][n].curState == WRONG_BOMB)
     {
